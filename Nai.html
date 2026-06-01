@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LOVE.exe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#030303;
+font-family:'Share Tech Mono', monospace;
+overflow:hidden;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+position:relative;
+}
+
+/* Scanlines */
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+
+background:
+repeating-linear-gradient(
+transparent,
+transparent 2px,
+rgba(255,255,255,.03) 3px,
+rgba(255,255,255,.03) 4px
+);
+
+pointer-events:none;
+z-index:999;
+}
+
+/* Ruido */
+
+body::after{
+content:"";
+position:fixed;
+inset:0;
+background-image:
+radial-gradient(circle, rgba(255,255,255,.03) 1px, transparent 1px);
+
+background-size:4px 4px;
+
+opacity:.2;
+
+pointer-events:none;
+z-index:998;
+}
+
+.container{
+text-align:center;
+z-index:10;
+}
+
+h1{
+font-size:6rem;
+color:#ff3b86;
+
+text-shadow:
+0 0 10px #ff3b86,
+0 0 20px #ff3b86,
+0 0 40px #ff3b86,
+0 0 80px #ff3b86;
+
+animation:pulse 2s infinite;
+}
+
+.system{
+margin-top:20px;
+font-size:1.2rem;
+color:#ffc4d8;
+}
+
+button{
+margin-top:30px;
+
+padding:15px 35px;
+
+font-size:1.1rem;
+
+background:#ff3b86;
+color:white;
+
+border:none;
+border-radius:12px;
+
+cursor:pointer;
+
+box-shadow:
+0 0 15px #ff3b86,
+0 0 40px #ff3b86;
+
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+.hidden{
+display:none;
+}
+
+.message{
+margin-top:25px;
+font-size:2rem;
+color:#ffd5e6;
+}
+
+.counter{
+margin-top:15px;
+font-size:1.2rem;
+color:#ff8eb8;
+}
+
+.heart{
+position:absolute;
+color:#ff3b86;
+animation:fall linear infinite;
+user-select:none;
+}
+
+.sparkle{
+position:absolute;
+color:white;
+animation:twinkle 3s infinite;
+user-select:none;
+}
+
+.bigHeart{
+position:absolute;
+font-size:250px;
+color:rgba(255,0,90,.15);
+
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+z-index:-1;
+
+animation:heartbeat 2s infinite;
+}
+
+@keyframes pulse{
+0%,100%{
+transform:scale(1);
+}
+50%{
+transform:scale(1.05);
+}
+}
+
+@keyframes heartbeat{
+0%,100%{
+transform:translate(-50%,-50%) scale(1);
+}
+50%{
+transform:translate(-50%,-50%) scale(1.08);
+}
+}
+
+@keyframes fall{
+from{
+transform:translateY(-100px);
+}
+to{
+transform:translateY(110vh);
+}
+}
+
+@keyframes twinkle{
+0%,100%{
+opacity:.2;
+}
+50%{
+opacity:1;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bigHeart">❤</div>
+
+<div class="container">
+
+<h1>LOVE.exe</h1>
+
+<p class="system">
+[SYSTEM] Inicializando protocolo del corazón...
+</p>
+
+<button onclick="mostrarMensaje()">
+Descifrar mensaje
+</button>
+
+<br>
+
+<button onclick="document.getElementById('music').play()">
+🎵 Activar música
+</button>
+
+<div id="mensaje" class="hidden">
+
+<div class="message">
+Te quiero muchísimo 💖
+</div>
+
+<div class="counter" id="contador"></div>
+
+</div>
+
+</div>
+
+<audio id="music" loop>
+<source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+function mostrarMensaje(){
+
+document.getElementById("mensaje").classList.remove("hidden");
+
+alert("Acceso concedido al corazón ❤️");
+
+}
+
+const fechaInicio = new Date("2024-01-01");
+
+function actualizarContador(){
+
+const hoy = new Date();
+
+const diferencia = hoy - fechaInicio;
+
+const dias = Math.floor(
+diferencia / (1000*60*60*24)
+);
+
+document.getElementById("contador").innerHTML =
+"Han pasado " + dias + " días ❤️";
+
+}
+
+actualizarContador();
+
+for(let i=0;i<40;i++){
+
+let heart=document.createElement("div");
+
+heart.innerHTML="❤";
+
+heart.className="heart";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=
+(15+Math.random()*25)+"px";
+
+heart.style.animationDuration=
+(5+Math.random()*10)+"s";
+
+document.body.appendChild(heart);
+
+}
+
+for(let i=0;i<30;i++){
+
+let star=document.createElement("div");
+
+star.innerHTML="✦";
+
+star.className="sparkle";
+
+star.style.left=Math.random()*100+"vw";
+
+star.style.top=Math.random()*100+"vh";
+
+star.style.fontSize=
+(10+Math.random()*15)+"px";
+
+document.body.appendChild(star);
+
+}
+
+</script>
+
+</body>
+</html>
